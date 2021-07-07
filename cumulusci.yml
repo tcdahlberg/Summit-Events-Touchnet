@@ -1,0 +1,25 @@
+minimum_cumulusci_version: '3.38.0'
+project:
+    name: Summit-Events-App-Templating
+    package:
+        name: Summit-Events-App-Templating
+        api_version: '50.0'
+    git:
+        default_branch: 'main'
+    source_format: sfdx
+
+tasks:
+    robot:
+        options:
+            suites: robot/Summit-Events-App-Templating/tests
+            options:
+                outputdir: robot/Summit-Events-App-Templating/results
+
+    robot_testdoc:
+        options:
+            path: robot/Summit-Events-App-Templating/tests
+            output: robot/Summit-Events-App-Templating/doc/Summit-Events-App-Templating_tests.html
+
+    run_tests:
+        options:
+            required_org_code_coverage_percent: 75
