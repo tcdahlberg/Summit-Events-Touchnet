@@ -5,7 +5,7 @@ project:
         name: Summit-Events-App-Templating
         api_version: '50.0'
     dependencies:
-        - github: 'https://github.com/SFDO-Community-Sprints/Summit-Events-App'
+        - version_id: 04t4P000002fPoHQAU
     git:
         default_branch: 'main'
     source_format: sfdx
@@ -85,7 +85,7 @@ tasks:
                 ];
 
                 List<PermissionSet> eventPermissionSets;
-                eventPermissionSets = [SELECT Name, Id FROM PermissionSet WHERE Name = 'summit__Summit_Events_Registrant'];
+                eventPermissionSets = [SELECT Name, Id FROM PermissionSet WHERE Name = 'Summit_Events_Registrant'];
 
                 List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
                 if (!eventPermissionSets.isEmpty()) {
