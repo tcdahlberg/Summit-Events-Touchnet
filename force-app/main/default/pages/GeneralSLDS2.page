@@ -5,8 +5,8 @@ license that can be found in the LICENSE file.
 Created by Thaddaeus Dahlberg on 2/15/2020.
 -->
 
-<apex:page id="GeneralSLDS" sidebar="false" lightningStyleSheets="true" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false">
-    <apex:slds />
+<apex:page id="GeneralSLDS" sidebar="false" lightningStyleSheets="true" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false" docType="html-5">
+    <apex:slds/>
     <html class="no-js" lang="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <head>
         <meta charset="utf-8"/>
@@ -16,6 +16,7 @@ Created by Thaddaeus Dahlberg on 2/15/2020.
         </title>
         <style>
             #loading .background {
+                background-image: url({!URLFOR($Resource.summit__SummitEventsAssets, '/img/loading-summit_events.gif')}) !important;
                 width: 160px;
                 height: 160px;
             }
@@ -24,6 +25,7 @@ Created by Thaddaeus Dahlberg on 2/15/2020.
                 max-width: 99%;
             }
         </style>
+
         <apex:insert name="scriptsHead"/>
     </head>
     <body>
@@ -39,20 +41,7 @@ Created by Thaddaeus Dahlberg on 2/15/2020.
             </div>
         </div>
     </div>
-    <script>
-        function fadein() {
-            // let fadeWrapper = document.getElementById('seadev-loading');
-            // fadeWrapper.style.display = "none";
-            return true;
-        }
-
-        function fadeout() {
-            // let fadeWrapper = document.getElementById('seadev-loading');
-            // fadeWrapper.style.display = "flex";
-            // fadeWrapper.style.opacity = '.7';
-            return true
-        }
-    </script>
+    <script src="{!URLFOR($Resource.summit__SummitEventsAssets, '/js/loading.js')}" type="text/javascript"></script>
     </body>
     </html>
 </apex:page>
