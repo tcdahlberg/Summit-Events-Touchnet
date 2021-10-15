@@ -1,11 +1,11 @@
 minimum_cumulusci_version: '3.38.0'
 project:
-    name: Summit-Events-App-Templating
+    name: Summit-Events-App-Touchnet
     package:
-        name: Summit-Events-App-Templating
+        name: Summit-Events-App-Touchnet
         api_version: '50.0'
     dependencies:
-        - version_id: 04t4P000002fPoqQAE
+        - version_id: 04t4P000002OxWAQA0
     git:
         default_branch: 'main'
     source_format: sfdx
