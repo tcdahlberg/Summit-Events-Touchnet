@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>summit__Summit_Events__c.summit__Payment_Gateway__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Touchnet Payment Gateway</label>
     <pageAccesses>
         <apexPage>Touchnet</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>TouchnetPaymentProcess</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
 </PermissionSet>

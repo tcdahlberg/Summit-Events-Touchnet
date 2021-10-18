@@ -2,6 +2,17 @@
  - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/15/2021.
  -->
 
-<apex:page id="Touchnet" controller="Touchnet">
-    You made it! {!SummitEventsInfo.registrationId}
+<apex:page id="Touchnet" controller="TouchNetController" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" docType="html-5.0" cache="false">
+    You made it! {!eventInfo.registrationId}
+    <apex:messages />
+    <form id="upayForm" action="{!upayURL}" method="post" rendered="{!showPaymentButton && totalPaymentAmount != null && totalPaymentAmount > 0}" styleClass="slds-grid slds-wrap">
+        <div class="slds-col slds-p-around_x-small slds-size_1-of-1">
+            <input id="TICKET_NAME" type="hidden" name="TICKET_NAME" value="{!ticketName}"/>
+            <input id="TICKET" type="hidden" name="TICKET" value="{!ticket}"/>
+            <input id="UPAY_SITE_ID" type="hidden" name="UPAY_SITE_ID" value="{!upayId}"/>
+        </div>
+    </form>
+    <script>
+        document.getElementById('upayForm').submit();
+    </script>
 </apex:page>
