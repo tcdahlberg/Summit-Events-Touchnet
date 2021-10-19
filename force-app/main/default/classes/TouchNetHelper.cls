@@ -13,6 +13,7 @@ public with sharing class TouchNetHelper {
         public String dt { get; set; }
     }
 
+    // Get the site url where Summit Events App lives
     public static String getSeaCommunityURL() {
         summit__Summit_Events_Settings__c myUserSetting = summit__Summit_Events_Settings__c.getInstance(UserInfo.getUserId());
         String communityBaseURL  = myUserSetting.summit__Community_Base_URL__c;
@@ -29,8 +30,10 @@ public with sharing class TouchNetHelper {
         return authorizationHeader;
     }
 
+    // Retrieves from an encrypted cookie the event information for the current registration
+    // {"audience":"High School Senior","instanceId":"a320m000000A5fOAAS","registrationId":"a350m0000008q63AAA,"eventId":"a330m0000001SOrAAM"}
     public static TouchNetHelper.SummitEventsInfo getSummitEventsInfo() {
-        //{"audience":"High School Senior","instanceId":"a320m000000A5fOAAS","registrationId":"a350m0000008q63AAA,"eventId":"a330m0000001SOrAAM"}
+
         TouchNetHelper.SummitEventsInfo eventInformation = new TouchNetHelper.SummitEventsInfo();
         String jsonInput = getSeaCookie(true);
         //See if a cookie exists
@@ -44,6 +47,8 @@ public with sharing class TouchNetHelper {
         return eventInformation;
     }
 
+    // Retrieves event information from an encrypted string passed to method
+    // {"audience":"High School Senior","instanceId":"a320m000000A5fOAAS","registrationId":"a350m0000008q63AAA,"eventId":"a330m0000001SOrAAM"}
     public static TouchNetHelper.SummitEventsInfo getSummitEventsInfo(String eventInfo) {
         TouchNetHelper.SummitEventsInfo eventInformation = new TouchNetHelper.SummitEventsInfo();
         String jsonInput = decryptString(eventInfo,false);
@@ -69,6 +74,7 @@ public with sharing class TouchNetHelper {
         return '';
     }
 
+    // Decrypts using Summit Events custom setting encryption key (unique to each org)
     public static String decryptString(String encryptedString, Boolean urlDecodeString) {
         String key = '';
         summit__Summit_Events_Settings__c SummitEventsSettings = summit__Summit_Events_Settings__c.getOrgDefaults();

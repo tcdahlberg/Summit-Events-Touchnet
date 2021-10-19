@@ -84,7 +84,7 @@ public with sharing class TouchNetPaymentProcessController {
             Dom.XmlNode root = doc.getRootElement();
             iterateThroughXML(root);
             if (mapResponse.containsKey('receiptNumber') && mapResponse.get('receiptNumber') != '') {
-                //Check if receipt already exists on payment
+                //Check if receipt already exists on payment and don't double record
                 summit__Summit_Events_Payment__c registrationPaymentCheck = [
                         SELECT Id, summit__TouchnetReceiptNumber__c, summit__Event_Registration__c
                         FROM summit__Summit_Events_Payment__c
