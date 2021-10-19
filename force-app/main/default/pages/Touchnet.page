@@ -12,7 +12,7 @@
         </div>
     </form>
     <script>
-        // Automatically submit form to post to UPay site
+        //Automatically submit form to post to UPay site
         document.getElementById('upayForm').submit();
     </script>
 </apex:page>

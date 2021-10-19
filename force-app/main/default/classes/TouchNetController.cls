@@ -45,7 +45,7 @@ public with sharing class TouchNetController {
                             summit__Donation_Description__c, summit__Display_Optional_Donation__c
                     FROM summit__Summit_Events__c
                     WHERE Id = :eventInfo.eventId
-            ][0];
+            ];
 
             templateSelected = eventPage.summit__Template__c;
 
@@ -55,7 +55,6 @@ public with sharing class TouchNetController {
                             summit__Instance_End_Date__c
                     FROM summit__Summit_Events_Instance__c
                     WHERE Id = :eventInfo.instanceId
-                    LIMIT 1
             ];
 
             eventFees = [
@@ -249,7 +248,7 @@ public with sharing class TouchNetController {
         envelop += '        </typ:nameValuePairs>';
         envelop += '        <typ:nameValuePairs>';
         envelop += '            <typ:name>ERROR_LINK</typ:name>';
-        envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'c__TouchNetPaymentProcess?eventInfo=' + encryptedEventInfo + '&error=1</typ:value>';
+        envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'c__TouchNetPaymentProcess?eventInfo=' + encryptedEventInfo + '</typ:value>';
         envelop += '        </typ:nameValuePairs>';
 
         envelop += '        <typ:nameValuePairs>';
@@ -283,6 +282,7 @@ public with sharing class TouchNetController {
         envelop += '</soapenv:Body>';
         envelop += '</soapenv:Envelope>';
 
+        System.debug(envelop);
         // Get ride of multiples spaces maintained for readability above
         envelop = envelop.normalizeSpace();
 
@@ -298,7 +298,9 @@ public with sharing class TouchNetController {
             Dom.Document doc = resp.getBodyDocument();
             Dom.XmlNode root = doc.getRootElement();
             iterateThroughXML(root);
+            System.debug(mapResponse);
             ticket = mapResponse.get('ticket');
+            System.debug(ticket);
         } catch (Exception ex) {
             System.debug(ex.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Error connecting payment gateway, please try later!!' + ex.getMessage()));

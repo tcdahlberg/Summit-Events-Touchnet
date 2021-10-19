@@ -85,14 +85,14 @@ public with sharing class TouchNetPaymentProcessController {
             iterateThroughXML(root);
             if (mapResponse.containsKey('receiptNumber') && mapResponse.get('receiptNumber') != '') {
                 //Check if receipt already exists on payment and don't double record
-                summit__Summit_Events_Payment__c registrationPaymentCheck = [
+                List<summit__Summit_Events_Payment__c> registrationPaymentCheck = [
                         SELECT Id, summit__TouchnetReceiptNumber__c, summit__Event_Registration__c
                         FROM summit__Summit_Events_Payment__c
                         WHERE summit__Event_Registration__c = :eventInfo.registrationId
                         AND summit__TouchnetReceiptNumber__c = :mapResponse.get('receiptNumber')
                 ];
 
-                if (registrationPaymentCheck == null) {
+                if (registrationPaymentCheck.size() < 1) {
 
                     summit__Summit_Events_Payment__c paymentInformation = new summit__Summit_Events_Payment__c();
                     //feeTypeInfo = getTransactionFeeName();
@@ -139,11 +139,11 @@ public with sharing class TouchNetPaymentProcessController {
                 pageRedirect.setRedirect(true);
 
             } else {
-                pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit&error=' + EncodingUtil.urlEncode('Transaction was not successful, please try again.', 'UTF-8'));
+                pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?error=' + EncodingUtil.urlEncode('Transaction was not successful, please try again.', 'UTF-8'));
                 pageRedirect.setRedirect(true);
             }
         } catch (Exception ex) {
-            pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit&error=' + EncodingUtil.urlEncode('Tayment can not be processed, please again. ' + ex.getMessage(), 'UTF-8'));
+            pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?error=' + EncodingUtil.urlEncode('Payment can not be processed, please again. ' + ex.getMessage(), 'UTF-8'));
             pageRedirect.setRedirect(true);
             if (sp != null) {
                 Database.rollback(sp);
