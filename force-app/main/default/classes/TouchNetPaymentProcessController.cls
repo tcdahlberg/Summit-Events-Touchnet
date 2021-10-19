@@ -92,8 +92,7 @@ public with sharing class TouchNetPaymentProcessController {
                         AND summit__TouchnetReceiptNumber__c = :mapResponse.get('receiptNumber')
                 ];
 
-                if (registrationPaymentCheck != null) {
-
+                if (registrationPaymentCheck == null) {
 
                     summit__Summit_Events_Payment__c paymentInformation = new summit__Summit_Events_Payment__c();
                     //feeTypeInfo = getTransactionFeeName();
