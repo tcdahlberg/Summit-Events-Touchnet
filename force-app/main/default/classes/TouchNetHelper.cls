@@ -29,7 +29,6 @@ public with sharing class TouchNetHelper {
         return authorizationHeader;
     }
 
-
     public static TouchNetHelper.SummitEventsInfo getSummitEventsInfo() {
         //{"audience":"High School Senior","instanceId":"a320m000000A5fOAAS","registrationId":"a350m0000008q63AAA,"eventId":"a330m0000001SOrAAM"}
         TouchNetHelper.SummitEventsInfo eventInformation = new TouchNetHelper.SummitEventsInfo();
@@ -93,6 +92,5 @@ public with sharing class TouchNetHelper {
         }
         return '';
     }
-
 
 }

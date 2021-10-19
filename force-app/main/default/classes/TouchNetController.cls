@@ -11,26 +11,21 @@ public with sharing class TouchNetController {
     public String templateSelected { get; set; }
     public Map <String, String> feesByIndex { get; set; }
 
-    public Boolean returnFromGateway { get; set; }
-
     /*Below are all private attribute*/
     private String touchNetService;
     private String gatewayOrigin;
     private Map<String, String> mapResponse = new Map<String, String>();
-    private Map<String, String> params;
     private List<summit__Summit_Events_Fee__c> eventFees { get; set; }
 
     /*Below are all public get;set; attribute*/
     public String upayURL { get; set; }
     public String upayId { get; set; }
-    public Boolean successReturnFromGateway { get; set; }
     public String ticket { get; set; }
     public String ticketName { get; set; }
     public Double totalPaymentAmount { get; set; }
     public Double existingPaymentAmount { get; set; }
     public Double eventOnlyPaymentAmount { get; set; }
     public Boolean showPaymentButton { get; set; }
-    public string headers { get; set; }
 
     public TouchNetController() {
         /** Collect Fees **/
@@ -250,11 +245,11 @@ public with sharing class TouchNetController {
         envelop += '        </typ:nameValuePairs>';
         envelop += '        <typ:nameValuePairs>';
         envelop += '            <typ:name>CANCEL_LINK</typ:name>';
-        envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'c__TouchNetPaymentProcess?eventInfo=' + encryptedEventInfo + '</typ:value>';
+        envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?eventInfo=' + encryptedEventInfo + '</typ:value>';
         envelop += '        </typ:nameValuePairs>';
         envelop += '        <typ:nameValuePairs>';
         envelop += '            <typ:name>ERROR_LINK</typ:name>';
-        envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'c__TouchNetPaymentProcess?eventInfo=' + encryptedEventInfo + '</typ:value>';
+        envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'c__TouchNetPaymentProcess?eventInfo=' + encryptedEventInfo + '&error=1</typ:value>';
         envelop += '        </typ:nameValuePairs>';
 
         envelop += '        <typ:nameValuePairs>';
@@ -322,5 +317,4 @@ public with sharing class TouchNetController {
             }
         }
     }
-
 }
