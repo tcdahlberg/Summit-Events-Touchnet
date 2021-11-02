@@ -18,27 +18,55 @@ public with sharing class TouchNetController {
     private List<summit__Summit_Events_Fee__c> eventFees { get; set; }
 
     /*Below are all public get;set; attribute*/
-    public String upayURL { get; set; }
-    public String upayId { get; set; }
+    public String uPayURL { get; set; }
+    public String uPayId { get; set; }
     public String ticket { get; set; }
     public String ticketName { get; set; }
     public Double totalPaymentAmount { get; set; }
     public Double existingPaymentAmount { get; set; }
     public Double eventOnlyPaymentAmount { get; set; }
     public Boolean showPaymentButton { get; set; }
+    public String goBackLink { get; set; }
 
     public TouchNetController() {
+        getDefaultEventInfo();
+        if (totalPaymentAmount > 0) {
+            showPaymentButton = true;
+            generateTicket();
+        }
+    }
+
+    public PageReference checkDefaultEventInfo() {
+        PageReference pageRedirect;
+        getDefaultEventInfo();
+        if (String.isBlank(touchNetService) || String.isBlank(uPayURL) || String.isBlank(uPayId) || String.isBlank(gatewayOrigin)) {
+            pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?error=' + EncodingUtil.urlEncode('Error: Payment gateway setup information is incomplete.', 'UTF-8'));
+            pageRedirect.setRedirect(true);
+        } else if (String.isBlank(eventInfo.eventId)) {
+            pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?error=' + EncodingUtil.urlEncode('Error: Could not detect a registration.', 'UTF-8'));
+            pageRedirect.setRedirect(true);
+        } else {
+            pageRedirect = null;
+        }
+        return pageRedirect;
+    }
+
+    public void getDefaultEventInfo() {
         /** Collect Fees **/
         eventInfo = TouchNetHelper.getSummitEventsInfo();
         totalPaymentAmount = 0;
         /** Get custom settings for Summit Events **/
         Touchnet_Payment_Gateway__c touchnetSettings = Touchnet_Payment_Gateway__c.getOrgDefaults();
         touchNetService = touchnetSettings.Tlink_URL__c;
-        upayURL = touchnetSettings.Upay_URL__c;
-        upayId = touchnetSettings.Upay_Id__c;
+        uPayURL = touchnetSettings.Upay_URL__c;
+        uPayId = touchnetSettings.Upay_Id__c;
         gatewayOrigin = touchnetSettings.Gateway_Origin__c;
 
-        if (!String.isEmpty(eventInfo.eventId)) {
+        if (String.isBlank(touchNetService) || String.isBlank(uPayURL) || String.isBlank(uPayId) || String.isBlank(gatewayOrigin)) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Error: Payment gateway setup information is incomplete.'));
+        } else if (String.isBlank(eventInfo.eventId)) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Error: Could not detect a registration.'));
+        } else {
             eventPage = [
                     SELECT summit__Event_Name__c, summit__Event_Submit_Title__c, summit__Event_Submit_Description__c, summit__Event_Footer__c, summit__Template__c,
                             summit__Event_Home_Link_Title__c, summit__Event_Home_Link_URL__c, summit__Tracking_Submit_Registration__c,
@@ -73,6 +101,8 @@ public with sharing class TouchNetController {
                     WHERE Id = :eventInfo.registrationId
             ];
 
+            goBackLink = TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit';
+
             /** Check for preexisting payment **/
             List<summit__Summit_Events_Payment__c> existingPayment = [
                     SELECT Id, summit__Payment_Amount__c, summit__TouchnetReceiptNumber__c
@@ -104,14 +134,6 @@ public with sharing class TouchNetController {
             if (existingPaymentAmount > 0) {
                 totalPaymentAmount = totalPaymentAmount - existingPaymentAmount;
             }
-
-            System.debug(totalPaymentAmount);
-
-            if (totalPaymentAmount > 0) {
-                showPaymentButton = true;
-                generateTicket();
-            }
-
         }
     }
 
@@ -244,7 +266,7 @@ public with sharing class TouchNetController {
         envelop += '        </typ:nameValuePairs>';
         envelop += '        <typ:nameValuePairs>';
         envelop += '            <typ:name>CANCEL_LINK</typ:name>';
-        envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?eventInfo=' + encryptedEventInfo + '</typ:value>';
+        envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?eventInfo=' + encryptedEventInfo + '&amp;error=' + EncodingUtil.urlEncode('Payment Cancelled.', 'UTF-8') + '</typ:value>';
         envelop += '        </typ:nameValuePairs>';
         envelop += '        <typ:nameValuePairs>';
         envelop += '            <typ:name>ERROR_LINK</typ:name>';
@@ -298,12 +320,9 @@ public with sharing class TouchNetController {
             Dom.Document doc = resp.getBodyDocument();
             Dom.XmlNode root = doc.getRootElement();
             iterateThroughXML(root);
-            System.debug(mapResponse);
             ticket = mapResponse.get('ticket');
-            System.debug(ticket);
         } catch (Exception ex) {
-            System.debug(ex.getMessage());
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Error connecting payment gateway, please try later!!' + ex.getMessage()));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 'Error connecting payment gateway, please try later. ' + ex.getMessage()));
         }
     }
 

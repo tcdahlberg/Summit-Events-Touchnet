@@ -59,7 +59,7 @@ public with sharing class TouchNetPaymentProcessController {
         if (String.isNotBlank(ApexPages.currentPage().getParameters().get('eventInfo'))) {
             eventInfo = TouchNetHelper.getSummitEventsInfo(ApexPages.currentPage().getParameters().get('eventInfo'));
         }
-        System.debug(JSON.serializePretty(eventInfo));
+        String encryptedEventInfo = EncodingUtil.urlEncode(TouchNetHelper.getSeaCookie(false), 'UTF-8');
         try {
             String envelop = '';
             envelop += '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:typ="http://types.secureLink.touchnet.com">';
@@ -135,15 +135,15 @@ public with sharing class TouchNetPaymentProcessController {
                     }
                     CRUDtoDo.updateFees(eventFees);
                 }
-                pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsConfirmation');
+                pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsConfirmation?eventInfo=' + encryptedEventInfo);
                 pageRedirect.setRedirect(true);
 
             } else {
-                pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?error=' + EncodingUtil.urlEncode('Transaction was not successful, please try again.', 'UTF-8'));
+                pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?eventInfo=' + encryptedEventInfo + '&amp;error=' + EncodingUtil.urlEncode('Transaction was not successful, please try again.', 'UTF-8'));
                 pageRedirect.setRedirect(true);
             }
         } catch (Exception ex) {
-            pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?error=' + EncodingUtil.urlEncode('Payment can not be processed, please again. ' + ex.getMessage(), 'UTF-8'));
+            pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?eventInfo=' + encryptedEventInfo + '&amp;error=' + EncodingUtil.urlEncode('Payment can not be processed, please again. ' + ex.getMessage(), 'UTF-8'));
             pageRedirect.setRedirect(true);
             if (sp != null) {
                 Database.rollback(sp);
