@@ -7,23 +7,11 @@
 
 
 @IsTest
-private class SeaTouchNetDataFactory {
+public with sharing class SeaTouchNetDataFactory {
+
     public static List<summit__Summit_Events_Instance__c> createTestEvent() {
 
-        summit__Summit_Events_Settings__c SummitEventsSettings = summit__Summit_Events_Settings__c.getOrgDefaults();
-        if (String.isBlank(SummitEventsSettings.summit__Cookie_Encryption_Key__c)) {
-            Blob cryptoKey = Crypto.generateAesKey(256);
-            String encryptionString = EncodingUtil.base64Encode(cryptoKey).substring(0, 32);
-            SummitEventsSettings.summit__Cookie_Encryption_Key__c = encryptionString;
-            upsert SummitEventsSettings;
-        }
-        if (String.isBlank(SummitEventsSettings.summit__Community_Base_URL__c)) {
-            SummitEventsSettings.summit__Community_Base_URL__c = 'https://google.com/';
-            upsert SummitEventsSettings;
-        }
-
         summit__Summit_Events__c testEvent = new summit__Summit_Events__c();
-
         //Create event
         testEvent = new summit__Summit_Events__c(
                 Name = 'Test Event',
@@ -207,16 +195,16 @@ private class SeaTouchNetDataFactory {
         insert testRegistration;
 
         //create encrypted string
-        TouchNetHelper tNHelper = new TouchNetHelper();
-        String encryptedString = tNHelper.createEncryptedCookie('', testRegistration.summit__Event_Instance__c, testRegistration.summit__Event__c, testRegistration.Id);
-
-        if (encryptedString.length() > 255) {
-            testRegistration.summit__Encrypted_Registration_Id_1__c = encryptedString.substring(0, 255);
-            testRegistration.summit__Encrypted_Registration_Id_2__c = encryptedString.substring(255, encryptedString.length());
-        } else {
-            testRegistration.summit__Encrypted_Registration_Id_1__c = encryptedString;
-        }
-        update testRegistration;
+//        TouchNetHelper tNHelper = new TouchNetHelper();
+//        String encryptedString = tNHelper.createEncryptedCookie('', testRegistration.summit__Event_Instance__c, testRegistration.summit__Event__c, testRegistration.Id);
+//
+//        if (encryptedString.length() > 255) {
+//            testRegistration.summit__Encrypted_Registration_Id_1__c = encryptedString.substring(0, 255);
+//            testRegistration.summit__Encrypted_Registration_Id_2__c = encryptedString.substring(255, encryptedString.length());
+//        } else {
+//            testRegistration.summit__Encrypted_Registration_Id_1__c = encryptedString;
+//        }
+//        update testRegistration;
 
         if (optionalContactLinkId != null) {
             testRegistration.summit__Contact__c = optionalContactLinkId;

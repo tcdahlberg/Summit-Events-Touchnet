@@ -10,5 +10,13 @@
 private class TouchNetController_TEST {
     @IsTest
     static void testBehavior() {
+        List<summit__Summit_Events_Instance__c> seaTestInstances = SeaTouchNetDataFactory.createTestEvent();
+        summit__Summit_Events_Registration__c seaTestRegistration = SeaTouchNetDataFactory.createEventRegistration(seaTestInstances[1], 'TestFirst', 'TestLast', 'test@valleyhill.net', '55418', '1971-03-22', '2012', null);
+        List<summit__Summit_Events_Fee_Allocation__c> testFeeAllocations = SeaTouchNetDataFactory.AddFeesToEvent(seaTestInstances[1].summit__Event__c);
+        SeaTouchNetDataFactory.AddDonationsToEvents(seaTestInstances[1].summit__Event__c, testFeeAllocations);
+        User testUser = SeaTouchNetDataFactory.userToRunWith('Standard User', 'Summit_Events_Registrant');
+        System.runAs(testUser) {
+            TouchNetController touchNetController = new TouchNetController();
+        }
     }
 }
