@@ -47,6 +47,33 @@ public with sharing class TouchNetHelper {
         return eventInformation;
     }
 
+    public String createEncryptedCookie(String audience, String instanceId, String eventId, String registrationId) {
+
+        //Check everything to not let nulls through to JSON string
+        audience = (String.isNotBlank(audience) && !audience.equalsIgnoreCase('null')) ? audience : '';
+        instanceId = (String.isNotBlank(instanceId) && !instanceId.equalsIgnoreCase('null')) ? instanceId : '';
+        eventId = (String.isNotBlank(eventId) && !eventId.equalsIgnoreCase('null')) ? eventId : '';
+        registrationId = (String.isNotBlank(registrationId) && !registrationId.equalsIgnoreCase('null')) ? registrationId : '';
+        String CookieValue = '{"audience":"' + audience + '","instanceId":"' + instanceId + '","eventId":"' + eventId + '","registrationId":"' + registrationId + '","dt":"' + String.valueOf(Datetime.now()) + '"}';
+        String encodedCipherText = '';
+        summit__Summit_Events_Settings__c SummitEventsSettings = summit__Summit_Events_Settings__c.getOrgDefaults();
+        String key = '';
+        if (String.isNotBlank(SummitEventsSettings.summit__Cookie_Encryption_Key__c)) {
+            key = SummitEventsSettings.summit__Cookie_Encryption_Key__c;
+        }
+        if (String.isNotBlank(String.valueOf(key))) {
+            Blob data = Blob.valueOf(CookieValue);
+            Blob encrypted = Crypto.encryptWithManagedIV('AES256', Blob.valueOf(key), data);
+            encodedCipherText = EncodingUtil.base64Encode(encrypted);
+            encodedCipherText = EncodingUtil.urlEncode(encodedCipherText, 'UTF-8');
+            Cookie SummitEventsCookie = new Cookie('SummitEvents', encodedCipherText, null, -1, false);
+            ApexPages.currentPage().setCookies(new Cookie[]{
+                    SummitEventsCookie
+            });
+        }
+        return encodedCipherText;
+    }
+
     // Retrieves event information from an encrypted string passed to method
     // {"audience":"High School Senior","instanceId":"a320m000000A5fOAAS","registrationId":"a350m0000008q63AAA,"eventId":"a330m0000001SOrAAM"}
     public static TouchNetHelper.SummitEventsInfo getSummitEventsInfo(String eventInfo) {
