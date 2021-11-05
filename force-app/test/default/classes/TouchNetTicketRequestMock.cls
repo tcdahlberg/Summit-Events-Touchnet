@@ -4,7 +4,7 @@
 
 
 @IsTest
-global class TouchNetRequestMock implements HttpCalloutMock {
+global class TouchNetTicketRequestMock implements HttpCalloutMock {
     global HttpResponse respond(HttpRequest request) {
         String XMLString = '';
         XMLString += '<?xml version="1.0" encoding="UTF-8"?>';

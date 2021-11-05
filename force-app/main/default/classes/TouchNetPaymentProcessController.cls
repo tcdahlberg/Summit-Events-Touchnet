@@ -8,8 +8,8 @@
 
 public with sharing class TouchNetPaymentProcessController {
     private Map<String, String> params;
-    public String upayURL { get; set; }
-    public String upayId { get; set; }
+    public String uPayURL { get; set; }
+    public String uPayId { get; set; }
     /*Below are all private attribute*/
     private String touchNetService;
     private String gatewayOrigin;
@@ -21,11 +21,11 @@ public with sharing class TouchNetPaymentProcessController {
 
     public PageReference checkReturnedHeader() {
         PageReference pageRedirect = null;
-        Touchnet_Payment_Gateway__c touchnetSettings = Touchnet_Payment_Gateway__c.getOrgDefaults();
-        touchNetService = touchnetSettings.Tlink_URL__c;
-        upayURL = touchnetSettings.Upay_URL__c;
-        upayId = touchnetSettings.Upay_Id__c;
-        gatewayOrigin = touchnetSettings.Gateway_Origin__c;
+        TouchNet_Payment_Gateway__c touchNetSettings = TouchNet_Payment_Gateway__c.getOrgDefaults();
+        touchNetService = touchNetSettings.TLink_URL__c;
+        uPayURL = touchNetSettings.UPay_URL__c;
+        uPayId = touchNetSettings.UPay_Id__c;
+        gatewayOrigin = touchNetSettings.Gateway_Origin__c;
 
         /** Check for postback of payment gateway **/
         params = ApexPages.currentPage().getParameters();
@@ -83,6 +83,7 @@ public with sharing class TouchNetPaymentProcessController {
             r.setMethod('GET');
             r.setBody(envelop);
             HttpResponse resp = h.send(r);
+            System.debug(resp.getBodyAsBlob().toString());
             Dom.Document doc = resp.getBodyDocument();
             Dom.XmlNode root = doc.getRootElement();
             iterateThroughXML(root);

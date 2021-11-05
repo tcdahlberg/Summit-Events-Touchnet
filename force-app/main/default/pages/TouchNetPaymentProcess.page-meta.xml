@@ -3,5 +3,5 @@
     <apiVersion>50.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>TouchnetPaymentProcess</label>
+    <label>TouchNetPaymentProcess</label>
 </ApexPage>

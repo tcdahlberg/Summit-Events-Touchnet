@@ -59,11 +59,11 @@ public with sharing class TouchNetController {
         eventInfo = TouchNetHelper.getSummitEventsInfo();
         totalPaymentAmount = 0;
         /** Get custom settings for Summit Events **/
-        Touchnet_Payment_Gateway__c touchnetSettings = Touchnet_Payment_Gateway__c.getOrgDefaults();
-        touchNetService = touchnetSettings.Tlink_URL__c;
-        uPayURL = touchnetSettings.Upay_URL__c;
-        uPayId = touchnetSettings.Upay_Id__c;
-        gatewayOrigin = touchnetSettings.Gateway_Origin__c;
+        TouchNet_Payment_Gateway__c touchNetSettings = TouchNet_Payment_Gateway__c.getOrgDefaults();
+        touchNetService = touchNetSettings.TLink_URL__c;
+        uPayURL = touchNetSettings.UPay_URL__c;
+        uPayId = touchNetSettings.UPay_Id__c;
+        gatewayOrigin = touchNetSettings.Gateway_Origin__c;
         if (String.isBlank(touchNetService) || String.isBlank(uPayURL) || String.isBlank(uPayId) || String.isBlank(gatewayOrigin)) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Error: Payment gateway setup information is incomplete.'));
         } else if (String.isBlank(eventInfo.eventId)) {

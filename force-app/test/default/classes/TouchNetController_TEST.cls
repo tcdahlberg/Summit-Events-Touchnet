@@ -13,14 +13,14 @@ private class TouchNetController_TEST {
         /* TouchNet gateway settings are not set and should give an error message on the page */
         /* Add Event data */
         List<summit__Summit_Events_Instance__c> seaTestInstances = SeaTouchNetDataFactory.createTestEvent();
-        summit__Summit_Events_Registration__c seaTestRegistration = SeaTouchNetDataFactory.createEventRegistration(seaTestInstances[1], 'TestFirst', 'TestLast', 'test@valleyhill.net', '55418', '1971-03-22', '2012', null);
-        List<summit__Summit_Events_Fee_Allocation__c> testFeeAllocations = SeaTouchNetDataFactory.AddFeesToEvent(seaTestInstances[1].summit__Event__c);
+        SeaTouchNetDataFactory.createEventRegistration(seaTestInstances[1], 'TestFirst', 'TestLast', 'test@valleyhill.net', '55418', '1971-03-22', '2012', null);
+        SeaTouchNetDataFactory.AddFeesToEvent(seaTestInstances[1].summit__Event__c);
         User testUser = SeaTouchNetDataFactory.userToRunWith('Standard User', 'Summit_Events_Registrant');
         SeaTouchNetDataFactory.checkSeaCustomSettings();
 
         System.runAs(testUser) {
             Test.startTest();
-            PageReference p = Page.Touchnet;
+            PageReference p = Page.TouchNet;
             Test.setCurrentPage(p);
             TouchNetController tNController = new TouchNetController();
 
@@ -55,7 +55,7 @@ private class TouchNetController_TEST {
             SeaTouchNetDataFactory.checkSeaCustomSettings();
 
             Test.startTest();
-            PageReference p = Page.Touchnet;
+            PageReference p = Page.TouchNet;
             Test.setCurrentPage(p);
             TouchNetController tNController = new TouchNetController();
 
@@ -102,11 +102,11 @@ private class TouchNetController_TEST {
         insert tNCustomSettings;
 
         /* Create a mock call out to get SOAP connection ticket */
-        Test.setMock(HttpCalloutMock.class, new TouchNetRequestMock());
+        Test.setMock(HttpCalloutMock.class, new TouchNetTicketRequestMock());
 
         System.runAs(testUser) {
             Test.startTest();
-            PageReference pageRef = Page.Touchnet;
+            PageReference pageRef = Page.TouchNet;
             Test.setCurrentPage(pageRef);
             TouchNetHelper tNHelper = new TouchNetHelper();
 

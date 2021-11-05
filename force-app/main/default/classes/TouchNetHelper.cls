@@ -26,8 +26,8 @@ public with sharing class TouchNetHelper {
     }
 
     public static String getAuthorizationHeader() {
-        Touchnet_Payment_Gateway__c touchnetSettings = Touchnet_Payment_Gateway__c.getOrgDefaults();
-        Blob headerValue = Blob.valueOf(touchnetSettings.Validation_Key__c);
+        TouchNet_Payment_Gateway__c touchNetSettings = TouchNet_Payment_Gateway__c.getOrgDefaults();
+        Blob headerValue = Blob.valueOf(touchNetSettings.Validation_Key__c);
         String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerValue);
         return authorizationHeader;
     }
@@ -57,7 +57,6 @@ public with sharing class TouchNetHelper {
         eventId = (String.isNotBlank(eventId) && !eventId.equalsIgnoreCase('null')) ? eventId : '';
         registrationId = (String.isNotBlank(registrationId) && !registrationId.equalsIgnoreCase('null')) ? registrationId : '';
         String CookieValue = '{"audience":"' + audience + '","instanceId":"' + instanceId + '","eventId":"' + eventId + '","registrationId":"' + registrationId + '","dt":"' + String.valueOf(Datetime.now()) + '"}';
-        System.debug(CookieValue);
         String encodedCipherText = '';
         summit__Summit_Events_Settings__c SummitEventsSettings = summit__Summit_Events_Settings__c.getOrgDefaults();
         String key = '';

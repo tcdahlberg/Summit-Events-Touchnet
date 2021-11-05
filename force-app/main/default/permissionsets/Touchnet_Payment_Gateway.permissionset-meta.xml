@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Touchnet Payment Gateway</label>
+    <label>TouchNet Payment Gateway</label>
     <pageAccesses>
-        <apexPage>Touchnet</apexPage>
+        <apexPage>TouchNet</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>TouchnetPaymentProcess</apexPage>
+        <apexPage>TouchNetPaymentProcess</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
 </PermissionSet>

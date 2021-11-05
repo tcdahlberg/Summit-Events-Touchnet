@@ -1,0 +1,7 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/15/2021.
+ -->
+
+<apex:page id="TouchNetPaymentProcess" controller="TouchNetPaymentProcessController" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" docType="html-5.0" cache="false" action="{!checkReturnedHeader}">
+    <apex:messages/>
+</apex:page>
