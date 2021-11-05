@@ -18,7 +18,7 @@ public with sharing class TouchNetHelper {
     // Get the site url where Summit Events App lives
     public static String getSeaCommunityURL() {
         summit__Summit_Events_Settings__c myUserSetting = summit__Summit_Events_Settings__c.getInstance(UserInfo.getUserId());
-        String communityBaseURL  = myUserSetting.summit__Community_Base_URL__c;
+        String communityBaseURL = myUserSetting.summit__Community_Base_URL__c;
         if (!communityBaseURL.endsWith('/')) {
             communityBaseURL += '/';
         }
@@ -57,6 +57,7 @@ public with sharing class TouchNetHelper {
         eventId = (String.isNotBlank(eventId) && !eventId.equalsIgnoreCase('null')) ? eventId : '';
         registrationId = (String.isNotBlank(registrationId) && !registrationId.equalsIgnoreCase('null')) ? registrationId : '';
         String CookieValue = '{"audience":"' + audience + '","instanceId":"' + instanceId + '","eventId":"' + eventId + '","registrationId":"' + registrationId + '","dt":"' + String.valueOf(Datetime.now()) + '"}';
+        System.debug(CookieValue);
         String encodedCipherText = '';
         summit__Summit_Events_Settings__c SummitEventsSettings = summit__Summit_Events_Settings__c.getOrgDefaults();
         String key = '';
@@ -80,7 +81,7 @@ public with sharing class TouchNetHelper {
     // {"audience":"High School Senior","instanceId":"a320m000000A5fOAAS","registrationId":"a350m0000008q63AAA,"eventId":"a330m0000001SOrAAM"}
     public static TouchNetHelper.SummitEventsInfo getSummitEventsInfo(String eventInfo) {
         TouchNetHelper.SummitEventsInfo eventInformation = new TouchNetHelper.SummitEventsInfo();
-        String jsonInput = decryptString(eventInfo,false);
+        String jsonInput = decryptString(eventInfo, false);
         if (String.isNotBlank(jsonInput)) {
             try {
                 eventInformation = (TouchNetHelper.SummitEventsInfo) JSON.deserialize(jsonInput, TouchNetHelper.SummitEventsInfo.class);
@@ -94,7 +95,7 @@ public with sharing class TouchNetHelper {
     public static String getSeaCookie(Boolean decrypt) {
         Cookie encodedCipherText = ApexPages.currentPage().getCookies().get('SummitEvents');
         if (encodedCipherText != null) {
-            if(decrypt) {
+            if (decrypt) {
                 return decryptString(encodedCipherText.getValue(), true);
             } else {
                 return encodedCipherText.getValue();
@@ -122,10 +123,8 @@ public with sharing class TouchNetHelper {
                 );
                 return decrypted.toString();
             } catch (Exception e) {
-                return '';
             }
         }
         return '';
     }
-
 }

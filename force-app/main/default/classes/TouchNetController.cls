@@ -35,12 +35,14 @@ public with sharing class TouchNetController {
         getDefaultEventInfo();
         if (totalPaymentAmount > 0) {
             showPaymentButton = true;
-            generateTicket();
+            String envelop = generateEnvelop();
+            ticket = requestTicket(envelop);
+            System.debug('TICKET : ' + ticket);
         }
     }
 
     public PageReference checkDefaultEventInfo() {
-        PageReference pageRedirect;
+        PageReference pageRedirect = null;
         getDefaultEventInfo();
         if (String.isBlank(touchNetService) || String.isBlank(uPayURL) || String.isBlank(uPayId) || String.isBlank(gatewayOrigin)) {
             pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?error=' + EncodingUtil.urlEncode('Error: Payment gateway setup information is incomplete.', 'UTF-8'));
@@ -48,8 +50,6 @@ public with sharing class TouchNetController {
         } else if (String.isBlank(eventInfo.eventId)) {
             pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?error=' + EncodingUtil.urlEncode('Error: Could not detect a registration.', 'UTF-8'));
             pageRedirect.setRedirect(true);
-        } else {
-            pageRedirect = null;
         }
         return pageRedirect;
     }
@@ -64,7 +64,6 @@ public with sharing class TouchNetController {
         uPayURL = touchnetSettings.Upay_URL__c;
         uPayId = touchnetSettings.Upay_Id__c;
         gatewayOrigin = touchnetSettings.Gateway_Origin__c;
-
         if (String.isBlank(touchNetService) || String.isBlank(uPayURL) || String.isBlank(uPayId) || String.isBlank(gatewayOrigin)) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Error: Payment gateway setup information is incomplete.'));
         } else if (String.isBlank(eventInfo.eventId)) {
@@ -140,8 +139,8 @@ public with sharing class TouchNetController {
         }
     }
 
-    /******* Below is used to generating ticket for TouchNetController ********/
-    public void generateTicket() {
+    /* Below is used to generating ticket for TouchNetController */
+    public String generateEnvelop() {
 
         ticketName = 'ThomasTicket';
 
@@ -307,10 +306,14 @@ public with sharing class TouchNetController {
         envelop += '</soapenv:Body>';
         envelop += '</soapenv:Envelope>';
 
-        System.debug(envelop);
+        //System.debug(envelop);
         // Get ride of multiples spaces maintained for readability above
         envelop = envelop.normalizeSpace();
+        return envelop;
+    }
 
+    public String requestTicket(String envelop) {
+        String requestedTicket = '';
         try {
             Http h = new Http();
             HttpRequest r = new HttpRequest();
@@ -321,12 +324,15 @@ public with sharing class TouchNetController {
             r.setBody(envelop);
             HttpResponse resp = h.send(r);
             Dom.Document doc = resp.getBodyDocument();
+            //System.debug(resp.getBodyAsBlob().toString());
             Dom.XmlNode root = doc.getRootElement();
+            //System.debug( root.getText());
             iterateThroughXML(root);
-            ticket = mapResponse.get('ticket');
+            requestedTicket =  mapResponse.get('ticket');
         } catch (Exception ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 'Error connecting payment gateway, please try later. ' + ex.getMessage()));
         }
+        return requestedTicket;
     }
 
     private void iterateThroughXML(Dom.XmlNode node) {

@@ -9,7 +9,23 @@
 @IsTest
 public with sharing class SeaTouchNetDataFactory {
 
+    public static void checkSeaCustomSettings() {
+        summit__Summit_Events_Settings__c SummitEventsSettings = summit__Summit_Events_Settings__c.getOrgDefaults();
+        if (String.isBlank(SummitEventsSettings.summit__Cookie_Encryption_Key__c)) {
+            Blob cryptoKey = Crypto.generateAesKey(256);
+            String encryptionString = EncodingUtil.base64Encode(cryptoKey).substring(0, 32);
+            SummitEventsSettings.summit__Cookie_Encryption_Key__c = encryptionString;
+            upsert SummitEventsSettings;
+        }
+        if (String.isBlank(SummitEventsSettings.summit__Community_Base_URL__c)) {
+            SummitEventsSettings.summit__Community_Base_URL__c = 'https://google.com/';
+            upsert SummitEventsSettings;
+        }
+    }
+
     public static List<summit__Summit_Events_Instance__c> createTestEvent() {
+
+        checkSeaCustomSettings();
 
         summit__Summit_Events__c testEvent = new summit__Summit_Events__c();
         //Create event
@@ -186,6 +202,11 @@ public with sharing class SeaTouchNetDataFactory {
                 summit__Registrant_First_Name__c = firstName,
                 summit__Registrant_Last_Name__c = lastName,
                 summit__Registrant_Zip__c = Zip,
+                summit__Registrant_Postal_Code__c = Zip,
+                summit__Registrant_Street_1__c = '123 Electric Ave',
+                summit__Registrant_Street_2__c = 'Apartment C',
+                summit__Registrant_City__c = 'Beach City',
+                summit__Registrant_State__c = 'MN',
                 summit__Registrant_High_School_Code__c = '000000',
                 summit__Registrant_Date_of_Birth__c = Date.valueOf(DOB),
                 summit__Preferred_Class_Year__c = ClassYear,
@@ -195,16 +216,16 @@ public with sharing class SeaTouchNetDataFactory {
         insert testRegistration;
 
         //create encrypted string
-//        TouchNetHelper tNHelper = new TouchNetHelper();
-//        String encryptedString = tNHelper.createEncryptedCookie('', testRegistration.summit__Event_Instance__c, testRegistration.summit__Event__c, testRegistration.Id);
-//
-//        if (encryptedString.length() > 255) {
-//            testRegistration.summit__Encrypted_Registration_Id_1__c = encryptedString.substring(0, 255);
-//            testRegistration.summit__Encrypted_Registration_Id_2__c = encryptedString.substring(255, encryptedString.length());
-//        } else {
-//            testRegistration.summit__Encrypted_Registration_Id_1__c = encryptedString;
-//        }
-//        update testRegistration;
+        TouchNetHelper tNHelper = new TouchNetHelper();
+        String encryptedString = tNHelper.createEncryptedCookie('', testRegistration.summit__Event_Instance__c, testRegistration.summit__Event__c, testRegistration.Id);
+
+        if (encryptedString.length() > 255) {
+            testRegistration.summit__Encrypted_Registration_Id_1__c = encryptedString.substring(0, 255);
+            testRegistration.summit__Encrypted_Registration_Id_2__c = encryptedString.substring(255, encryptedString.length());
+        } else {
+            testRegistration.summit__Encrypted_Registration_Id_1__c = encryptedString;
+        }
+        update testRegistration;
 
         if (optionalContactLinkId != null) {
             testRegistration.summit__Contact__c = optionalContactLinkId;
@@ -272,7 +293,7 @@ public with sharing class SeaTouchNetDataFactory {
         // Profile p = [SELECT Id, Name FROM Profile WHERE Name = :profileName];
         Profile p;
 
-        p = [select Id,name from Profile where Name = :profileName];
+        p = [SELECT Id,Name FROM Profile WHERE Name = :profileName];
 
         return new User(
                 Alias = alias,
