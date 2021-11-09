@@ -94,52 +94,53 @@ public with sharing class TouchNetPaymentProcessController {
                     //feeTypeInfo = getTransactionFeeName();
                     sp = Database.setSavepoint();
 
-                    paymentInformation.summit__Event_Registration__c = eventInfo.registrationId;
-                    paymentInformation.summit__Address_1__c = mapResponse.get('BILL_STREET1');
+                    //URL parameters
+                    paymentInformation.summit__Gateway_Session_Identifier__c = params.get('session_identifier');
+                    paymentInformation.summit__Phone__c = params.get('acct_phone_mobile');
+                    paymentInformation.summit__Payment_Method__c = params.get('pmt_method');
+                    paymentInformation.summit__Payment_Method_Expiration_Date__c = params.get('pmt_method_exp_date');
+
+                    if (mapResponse.containsKey('BILL_NAME')) {
+                        paymentInformation.summit__Name_On_Account__c = mapResponse.get('BILL_NAME');
+                    }
+                    if (mapResponse.containsKey('BILL_STREET1')) {
+                        paymentInformation.summit__Address_1__c = mapResponse.get('BILL_STREET1');
+                    }
                     if (mapResponse.containsKey('BILL_STREET2')) {
                         paymentInformation.summit__Address_2__c = mapResponse.get('BILL_STREET2');
                     }
                     if (mapResponse.containsKey('BILL_CITY')) {
-                        paymentInformation.summit__City__c = params.get('BILL_CITY');
+                        paymentInformation.summit__City__c = mapResponse.get('BILL_CITY');
                     }
                     if (mapResponse.containsKey('BILL_COUNTRY')) {
-                        paymentInformation.summit__Country__c = params.get('BILL_COUNTRY');
+                        paymentInformation.summit__Country__c = mapResponse.get('BILL_COUNTRY');
                     }
                     if (mapResponse.containsKey('BILL_EMAIL_ADDRESS')) {
-                        paymentInformation.summit__Email_Address__c = params.get('BILL_EMAIL_ADDRESS');
+                        paymentInformation.summit__Email_Address__c = mapResponse.get('BILL_EMAIL_ADDRESS');
                     }
                     if (mapResponse.containsKey('BILL_STATE')) {
-                        paymentInformation.summit__State__c = params.get('BILL_STATE');
+                        paymentInformation.summit__State__c = mapResponse.get('BILL_STATE');
                     }
                     if (mapResponse.containsKey('BILL_POSTAL_CODE')) {
-                        paymentInformation.summit__Zip__c = params.get('BILL_POSTAL_CODE');
+                        paymentInformation.summit__Zip__c = mapResponse.get('BILL_POSTAL_CODE');
                     }
-
-                    paymentInformation.summit__Phone__c = params.get('acct_phone_mobile');
-
                     if (mapResponse.containsKey('creditCardType')) {
-                        paymentInformation.summit__Card_Type__c = params.get('creditCardType');
+                        paymentInformation.summit__Card_Type__c = mapResponse.get('creditCardType');
                     }
                     if (mapResponse.containsKey('maskedAccountNumber')) {
-                        paymentInformation.summit__Account_Number__c = params.get('maskedAccountNumber');
+                        paymentInformation.summit__Account_Number__c = mapResponse.get('maskedAccountNumber');
                     }
-
-
-                    paymentInformation.summit__Name_On_Account__c = params.get('name_on_acct');
-
                     if (mapResponse.containsKey('AMT')) {
                         paymentInformation.summit__Payment_Amount__c = Decimal.valueOf(mapResponse.get('AMT'));
                     }
-                    paymentInformation.summit__Payment_Method__c = params.get('pmt_method');
-
-                    paymentInformation.summit__Payment_Method_Expiration_Date__c = params.get('pmt_method_exp_date');
-                    paymentInformation.summit__Gateway_Session_Identifier__c = params.get('session_identifier');
                     if (mapResponse.containsKey('receiptNumber')) {
                         paymentInformation.summit__TouchnetReceiptNumber__c = mapResponse.get('receiptNumber');
                     }
                     if (mapResponse.containsKey('approvalCode')) {
                         paymentInformation.summit__GatewayApprovalCode__c = mapResponse.get('approvalCode');
                     }
+
+                    paymentInformation.summit__Event_Registration__c = eventInfo.registrationId;
                     paymentInformation.summit__Method_of_Payment__c = 'Credit Card';
                     paymentInformation.summit__Payment_Status__c = 'Received';
                     paymentInformation.summit__Payment_Received_Date__c = System.now();
@@ -210,6 +211,7 @@ public with sharing class TouchNetPaymentProcessController {
                 }
             }
         }
+        System.debug(mapResponse);
     }
 
     public void requestTicket(String envelop) {
@@ -223,9 +225,9 @@ public with sharing class TouchNetPaymentProcessController {
             r.setBody(envelop);
             HttpResponse resp = h.send(r);
             Dom.Document doc = resp.getBodyDocument();
-            //System.debug(resp.getBodyAsBlob().toString());
+            System.debug(resp.getBodyAsBlob().toString());
             Dom.XmlNode root = doc.getRootElement();
-            //System.debug( root.getText());
+            System.debug( root.getText());
             iterateThroughXML(root);
         } catch (Exception ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 'Error connecting payment gateway, please try later. ' + ex.getMessage()));
