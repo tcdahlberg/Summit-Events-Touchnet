@@ -58,11 +58,12 @@ public with sharing class TouchNetPaymentProcessController {
         Savepoint sp = null;
         doCRUD CRUDtoDo = new doCRUD();
         TouchNetHelper.SummitEventsInfo eventInfo = new TouchNetHelper.SummitEventsInfo();
-        System.debug(ApexPages.currentPage().getParameters().get('eventInfo'));
         if (String.isNotBlank(ApexPages.currentPage().getParameters().get('eventInfo'))) {
             eventInfo = TouchNetHelper.getSummitEventsInfo(ApexPages.currentPage().getParameters().get('eventInfo'));
         }
+
         String encryptedEventInfo = EncodingUtil.urlEncode(TouchNetHelper.getSeaCookie(false), 'UTF-8');
+
         try {
             String envelop = '';
             envelop += '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:typ="http://types.secureLink.touchnet.com">';
@@ -74,20 +75,11 @@ public with sharing class TouchNetPaymentProcessController {
             envelop += '            </typ:authorizeAccountRequest>';
             envelop += '    </soapenv:Body>';
             envelop += '</soapenv:Envelope>';
-            Http h = new Http();
-            HttpRequest r = new HttpRequest();
-            r.setTimeout(120000); // timeout in milliseconds
-            r.setEndpoint(touchNetService);
-            r.setHeader('Authorization', TouchNetHelper.getAuthorizationHeader());
-            r.setHeader('SOAPAction', touchNetService);
-            r.setMethod('GET');
-            r.setBody(envelop);
-            HttpResponse resp = h.send(r);
-            System.debug(resp.getBodyAsBlob().toString());
-            Dom.Document doc = resp.getBodyDocument();
-            Dom.XmlNode root = doc.getRootElement();
-            iterateThroughXML(root);
+
+            requestTicket(envelop);
+
             if (mapResponse.containsKey('receiptNumber') && mapResponse.get('receiptNumber') != '') {
+
                 //Check if receipt already exists on payment and don't double record
                 List<summit__Summit_Events_Payment__c> registrationPaymentCheck = [
                         SELECT Id, summit__TouchnetReceiptNumber__c, summit__Event_Registration__c
@@ -103,23 +95,51 @@ public with sharing class TouchNetPaymentProcessController {
                     sp = Database.setSavepoint();
 
                     paymentInformation.summit__Event_Registration__c = eventInfo.registrationId;
-                    paymentInformation.summit__Address_1__c = params.get('acct_addr');
-                    paymentInformation.summit__Address_2__c = params.get('acct_addr2');
-                    paymentInformation.summit__City__c = params.get('acct_city');
-                    paymentInformation.summit__Country__c = params.get('acct_country');
-                    paymentInformation.summit__Email_Address__c = params.get('acct_email_address');
-                    paymentInformation.summit__Account_Number__c = params.get('acct_number');
+                    paymentInformation.summit__Address_1__c = mapResponse.get('BILL_STREET1');
+                    if (mapResponse.containsKey('BILL_STREET2')) {
+                        paymentInformation.summit__Address_2__c = mapResponse.get('BILL_STREET2');
+                    }
+                    if (mapResponse.containsKey('BILL_CITY')) {
+                        paymentInformation.summit__City__c = params.get('BILL_CITY');
+                    }
+                    if (mapResponse.containsKey('BILL_COUNTRY')) {
+                        paymentInformation.summit__Country__c = params.get('BILL_COUNTRY');
+                    }
+                    if (mapResponse.containsKey('BILL_EMAIL_ADDRESS')) {
+                        paymentInformation.summit__Email_Address__c = params.get('BILL_EMAIL_ADDRESS');
+                    }
+                    if (mapResponse.containsKey('BILL_STATE')) {
+                        paymentInformation.summit__State__c = params.get('BILL_STATE');
+                    }
+                    if (mapResponse.containsKey('BILL_POSTAL_CODE')) {
+                        paymentInformation.summit__Zip__c = params.get('BILL_POSTAL_CODE');
+                    }
+
                     paymentInformation.summit__Phone__c = params.get('acct_phone_mobile');
-                    paymentInformation.summit__State__c = params.get('acct_state');
-                    paymentInformation.summit__Zip__c = params.get('acct_zip');
-                    paymentInformation.summit__Card_Type__c = params.get('card_type');
+
+                    if (mapResponse.containsKey('creditCardType')) {
+                        paymentInformation.summit__Card_Type__c = params.get('creditCardType');
+                    }
+                    if (mapResponse.containsKey('maskedAccountNumber')) {
+                        paymentInformation.summit__Account_Number__c = params.get('maskedAccountNumber');
+                    }
+
+
                     paymentInformation.summit__Name_On_Account__c = params.get('name_on_acct');
-                    paymentInformation.summit__Payment_Amount__c = Decimal.valueOf(params.get('pmt_amt'));
+
+                    if (mapResponse.containsKey('AMT')) {
+                        paymentInformation.summit__Payment_Amount__c = Decimal.valueOf(mapResponse.get('AMT'));
+                    }
                     paymentInformation.summit__Payment_Method__c = params.get('pmt_method');
+
                     paymentInformation.summit__Payment_Method_Expiration_Date__c = params.get('pmt_method_exp_date');
                     paymentInformation.summit__Gateway_Session_Identifier__c = params.get('session_identifier');
-                    paymentInformation.summit__TouchnetReceiptNumber__c = mapResponse.get('receiptNumber');
-                    paymentInformation.summit__GatewayApprovalCode__c = mapResponse.get('approvalCode');
+                    if (mapResponse.containsKey('receiptNumber')) {
+                        paymentInformation.summit__TouchnetReceiptNumber__c = mapResponse.get('receiptNumber');
+                    }
+                    if (mapResponse.containsKey('approvalCode')) {
+                        paymentInformation.summit__GatewayApprovalCode__c = mapResponse.get('approvalCode');
+                    }
                     paymentInformation.summit__Method_of_Payment__c = 'Credit Card';
                     paymentInformation.summit__Payment_Status__c = 'Received';
                     paymentInformation.summit__Payment_Received_Date__c = System.now();
@@ -140,55 +160,93 @@ public with sharing class TouchNetPaymentProcessController {
                     CRUDtoDo.updateFees(eventFees);
                 }
                 pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsConfirmation?eventInfo=' + encryptedEventInfo);
-                pageRedirect.setRedirect(true);
-
             } else {
                 pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?eventInfo=' + encryptedEventInfo + '&amp;error=' + EncodingUtil.urlEncode('Transaction was not successful, please try again.', 'UTF-8'));
-                pageRedirect.setRedirect(true);
             }
         } catch (Exception ex) {
-            pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?eventInfo=' + encryptedEventInfo + '&amp;error=' + EncodingUtil.urlEncode('Payment can not be processed, please again. ' + ex.getMessage(), 'UTF-8'));
-            pageRedirect.setRedirect(true);
+            pageRedirect = new PageReference(TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?eventInfo=' + encryptedEventInfo + '&amp;error=' + EncodingUtil.urlEncode('Payment can not be processed, please try again. ' + ex.getMessage(), 'UTF-8'));
             if (sp != null) {
                 Database.rollback(sp);
             }
         }
+        if (pageRedirect != null) {
+            pageRedirect.setRedirect(true);
+        }
         return pageRedirect;
     }
 
-    private void iterateThroughXML(Dom.XmlNode node) {
-        if (node.getNodeType() == Dom.XmlNodeType.ELEMENT) {
-            if (node.getText().trim() != '') {
-                if (!mapResponse.containsKey(node.getName())) {
-                    mapResponse.put(node.getName(), node.getText().trim());
+    private void iterateThroughXML(Dom.XmlNode root) {
+        for (Dom.XmlNode childElement : root.getChildElements()) {
+            for (Dom.XmlNode detailElement : childElement.getChildElements()) {
+                if (detailElement.getName() == 'authorizeAccountResponse') {
+                    for (Dom.XmlNode detailElement2 : detailElement.getChildElements()) {
+                        Integer pairCount = 1;
+                        if (detailElement2.getName() == 'nameValuePairs') {
+                            String mapName = '';
+                            for (Dom.XmlNode detailElement3 : detailElement2.getChildElements()) {
+                                if (pairCount == 1) {
+                                    mapName = detailElement3.getText();
+                                }
+                                if (pairCount == 2) {
+                                    mapResponse.put(mapName, detailElement3.getText());
+                                    pairCount = 0;
+                                }
+                                pairCount++;
+                            }
+                        } else if (detailElement2.getName() == 'creditResponse') {
+                            for (Dom.XmlNode detailElement3 : detailElement2.getChildElements()) {
+                                if (detailElement3.getName() == 'creditCardInfo') {
+                                    for (Dom.XmlNode detailElement4 : detailElement3.getChildElements()) {
+                                        mapResponse.put(detailElement4.getName(), detailElement4.getText());
+                                    }
+                                } else {
+                                    mapResponse.put(detailElement3.getName(), detailElement3.getText());
+                                }
+                            }
+                        } else {
+                            mapResponse.put(detailElement2.getName(), detailElement2.getText());
+                        }
+                    }
                 }
             }
-            for (Dom.XmlNode child : node.getChildElements()) {
-                iterateThroughXML(child);
-            }
+        }
+    }
+
+    public void requestTicket(String envelop) {
+        try {
+            Http h = new Http();
+            HttpRequest r = new HttpRequest();
+            r.setEndpoint(touchNetService);
+            r.setHeader('Authorization', TouchNetHelper.getAuthorizationHeader());
+            r.setHeader('SOAPAction', touchNetService);
+            r.setMethod('GET');
+            r.setBody(envelop);
+            HttpResponse resp = h.send(r);
+            Dom.Document doc = resp.getBodyDocument();
+            //System.debug(resp.getBodyAsBlob().toString());
+            Dom.XmlNode root = doc.getRootElement();
+            //System.debug( root.getText());
+            iterateThroughXML(root);
+        } catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 'Error connecting payment gateway, please try later. ' + ex.getMessage()));
         }
     }
 
     private without sharing class doCRUD {
 
-        public void updateFees(List<summit__Summit_Events_Fee__c> upsertableFees) {
+        public void updateFees(List<summit__Summit_Events_Fee__c> fees) {
             try {
-                upsert upsertableFees;
+                upsert fees;
             } catch (Exception ex) {
-                System.debug(JSON.serializePretty(ex.getMessage()));
-                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING, ex.getMessage());
-                ApexPages.addMessage(myMsg);
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, ex.getMessage()));
             }
         }
 
         public void createPaymentRecord(summit__Summit_Events_Payment__c payment) {
             try {
-                System.debug(JSON.serializePretty(payment));
                 insert payment;
             } catch (Exception ex) {
-                System.debug(JSON.serializePretty(ex.getMessage()));
-                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING, ex.getMessage());
-                ApexPages.addMessage(myMsg);
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, ex.getMessage()));
             }
         }
     }

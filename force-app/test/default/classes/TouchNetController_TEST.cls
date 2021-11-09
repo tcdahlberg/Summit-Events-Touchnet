@@ -44,11 +44,11 @@ private class TouchNetController_TEST {
         /* Touchnet gateway settings are set, but no event registration is detectable so a page erro message is given */
         User testUser = SeaTouchNetDataFactory.userToRunWith('Standard User', 'Summit_Events_Registrant');
         System.runAs(testUser) {
-            Touchnet_Payment_Gateway__c tNCustomSettings = Touchnet_Payment_Gateway__c.getOrgDefaults();
+            TouchNet_Payment_Gateway__c tNCustomSettings = TouchNet_Payment_Gateway__c.getOrgDefaults();
             tNCustomSettings.Validation_Key__c = 'FAKE';
-            tNCustomSettings.Upay_Id__c = '0';
-            tNCustomSettings.Tlink_URL__c = 'https://test.secure.touchnet.net:8703/TESTtest_tlink/services/TPGSecureLink';
-            tNCustomSettings.Upay_URL__c = 'https://test.secure.touchnet.net:8443/TESTtest_tlink/web/index.jsp';
+            tNCustomSettings.UPay_Id__c = '0';
+            tNCustomSettings.TLink_URL__c = 'https://test.secure.touchnet.net:8703/TESTtest_tlink/services/TPGSecureLink';
+            tNCustomSettings.UPay_URL__c = 'https://test.secure.touchnet.net:8443/TESTtest_tlink/web/index.jsp';
             tNCustomSettings.Gateway_Origin__c = 'https://test.secure.touchnet.net';
             insert tNCustomSettings;
 
@@ -71,7 +71,7 @@ private class TouchNetController_TEST {
                     messageFound = true;
                 }
             }
-            System.Assert(messageFound);
+            System.assert(messageFound);
 
             Test.stopTest();
         }
@@ -93,11 +93,11 @@ private class TouchNetController_TEST {
         insert seaFee;
 
         /* Add fake TouchNet gateway information into custom settings */
-        Touchnet_Payment_Gateway__c tNCustomSettings = Touchnet_Payment_Gateway__c.getOrgDefaults();
+        TouchNet_Payment_Gateway__c tNCustomSettings = TouchNet_Payment_Gateway__c.getOrgDefaults();
         tNCustomSettings.Validation_Key__c = 'FAKE';
-        tNCustomSettings.Upay_Id__c = '0';
-        tNCustomSettings.Tlink_URL__c = 'https://test.secure.touchnet.net:8703/TESTtest_tlink/services/TPGSecureLink';
-        tNCustomSettings.Upay_URL__c = 'https://test.secure.touchnet.net:8443/TESTtest_tlink/web/index.jsp';
+        tNCustomSettings.UPay_Id__c = '0';
+        tNCustomSettings.TLink_URL__c = 'https://test.secure.touchnet.net:8703/TESTtest_tlink/services/TPGSecureLink';
+        tNCustomSettings.UPay_URL__c = 'https://test.secure.touchnet.net:8443/TESTtest_tlink/web/index.jsp';
         tNCustomSettings.Gateway_Origin__c = 'https://test.secure.touchnet.net';
         insert tNCustomSettings;
 

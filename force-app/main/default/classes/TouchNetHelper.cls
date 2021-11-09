@@ -73,6 +73,7 @@ public with sharing class TouchNetHelper {
                     SummitEventsCookie
             });
         }
+        encodedCipherText = EncodingUtil.urlDecode(encodedCipherText, 'UTF-8');
         return encodedCipherText;
     }
 
@@ -122,6 +123,7 @@ public with sharing class TouchNetHelper {
                 );
                 return decrypted.toString();
             } catch (Exception e) {
+                System.debug(e.getMessage());
             }
         }
         return '';
