@@ -1,9 +1,9 @@
 minimum_cumulusci_version: '3.73.0'
 project:
-    name: Summit-Events-App-Touchnet
+    name: Summit-Events-App-TouchNet
     package:
-        name: Summit-Events-App-Touchnet
-        api_version: '56.0'
+        name: Summit-Events-App-TouchNet
+        api_version: '57.0'
     dependencies:
         - github: 'https://github.com/SFDO-Community/Summit-Events-App.git'
     git:
