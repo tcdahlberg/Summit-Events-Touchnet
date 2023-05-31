@@ -5,7 +5,7 @@ project:
         name: Summit-Events-App-TouchNet
         api_version: '57.0'
     dependencies:
-        - github: 'https://github.com/SFDO-Community/Summit-Events-App.git'
+        - version_id: 04tDo000000h13iIAA
     git:
         default_branch: 'main'
     source_format: sfdx
