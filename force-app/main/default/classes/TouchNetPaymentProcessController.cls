@@ -13,7 +13,7 @@ public with sharing class TouchNetPaymentProcessController {
     /*Below are all private attribute*/
     private String touchNetService;
     private String gatewayOrigin;
-    private Map<String, String> mapResponse = new Map<String, String>();
+    private final Map<String, String> mapResponse = new Map<String, String>();
 
     public TouchNetPaymentProcessController() {
 
