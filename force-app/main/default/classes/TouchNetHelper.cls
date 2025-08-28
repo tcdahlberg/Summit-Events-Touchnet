@@ -5,7 +5,7 @@
  * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/15/2021.
  */
 
-public with sharing class TouchNetHelper {
+public without sharing class TouchNetHelper {
 
     public class SummitEventsInfo {
         public String audience { get; set; }

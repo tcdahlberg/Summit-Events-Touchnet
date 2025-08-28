@@ -5,7 +5,7 @@
  * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/12/2021.
  */
 
-public with sharing class TouchNetController {
+public without sharing class TouchNetController {
 
     public TouchNetHelper.SummitEventsInfo eventInfo { get; set; }
     public summit__Summit_Events__c eventPage { get; set; }

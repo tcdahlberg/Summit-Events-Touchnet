@@ -6,7 +6,7 @@
  */
 
 
-public with sharing class TouchNetPaymentProcessController {
+public without sharing class TouchNetPaymentProcessController {
     private Map<String, String> params;
     public String uPayURL { get; set; }
     public String uPayId { get; set; }
