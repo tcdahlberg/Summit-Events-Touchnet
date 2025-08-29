@@ -145,16 +145,6 @@
                 <identifier>record_item_010</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.summit__Payment_Gateway__c</fieldItem>
-                <identifier>Recordsummit_Payment_Gateway_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-c541d177-e1cf-45e6-ad76-52939464f2a8</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -490,6 +480,10 @@
                     <value>Facet-fb92a927-cc84-4d93-8711-bfa2b517edeb</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Standard Details</value>
                 </componentInstanceProperties>
@@ -502,6 +496,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-735a0570-6403-4f7b-b9e3-300622f6ba6e</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -518,6 +516,10 @@
                     <value>Facet-05043ac6-b8d9-4f02-b05b-fcf56ffe177e</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Location &amp; Audience</value>
                 </componentInstanceProperties>
@@ -532,6 +534,10 @@
                     <value>Facet-a1475213-3ee7-4ddd-91fa-f279d836773f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Event Page Description</value>
                 </componentInstanceProperties>
@@ -544,6 +550,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-0f9c7496-6e18-468c-b1f2-fb97c4baa834</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -627,6 +637,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.summit__Ask_Phone__c</fieldItem>
                 <identifier>record_item_031</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Do_not_show_receive_text_question__c</fieldItem>
+                <identifier>RecordDo_not_show_receive_text_message_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-ea1599cf-d622-472d-9a35-4274685444fc</name>
@@ -807,6 +827,32 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.summit__Ask_Dietary_Restrictions__c</fieldItem>
+                <identifier>RecordAsk_Dietary_Restrictions_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Ask_Accessibility_Needs__c</fieldItem>
+                <identifier>RecordAsk_Accessibility_Needs_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>flexipage:blankSpace</componentName>
+                <identifier>flexipage_blankSpace</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.summit__Ask_Third_Party_Registrant__c</fieldItem>
                 <identifier>record_item_046</identifier>
             </fieldInstance>
@@ -931,6 +977,36 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.summit__Dietary_Restrictions_Label__c</fieldItem>
+                <identifier>RecordDietary_Restrictions_Label_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Accessibility_Label__c</fieldItem>
+                <identifier>RecordAccessibility_Label_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Accessibility_Detail_Label__c</fieldItem>
+                <identifier>RecordAccessibility_Detail_Label_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.summit__Third_Party_Registrant_Label__c</fieldItem>
                 <identifier>record_item_058</identifier>
             </fieldInstance>
@@ -970,6 +1046,10 @@
                     <value>Facet-bcaf1fd2-3cea-4d23-8760-325fe600febe</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Required Field Labels</value>
                 </componentInstanceProperties>
@@ -984,6 +1064,10 @@
                     <value>Facet-2fe68859-5f6d-4f2e-8fae-13e70df67786</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Phone Options | Labels</value>
                 </componentInstanceProperties>
@@ -996,6 +1080,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-37cb3137-a1a7-4473-af13-00970c644385</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1083,6 +1171,26 @@
                 <identifier>record_item_065</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__reCAPTCHA__c</fieldItem>
+                <identifier>RecordreCAPTCHA_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__reCAPTCHA_v3_Score_Fail_Text__c</fieldItem>
+                <identifier>RecordreCAPTCHA_v3_Score_Fail_Text_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-d543eeaf-8fe9-46b3-8481-4663d648d58c</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1121,10 +1229,6 @@
                 <identifier>record_item_066</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-8c228279-6d57-4f6d-b714-7f39947ba3cd</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1135,6 +1239,10 @@
                 <identifier>record_item_067</identifier>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-8c228279-6d57-4f6d-b714-7f39947ba3cd</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1143,6 +1251,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.summit__Add_Info_Question_Pick_List_1__c</fieldItem>
                 <identifier>record_item_068</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Add_Info_Question_Pick_List_Long_1__c</fieldItem>
+                <identifier>RecordAdd_Info_Question_Pick_List_Long_1_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-6e08869c-a7a8-4509-b6f2-254b33861288</name>
@@ -1183,10 +1301,6 @@
                 <identifier>record_item_069</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-4dc8f791-8dd3-43f0-b35a-3ba0ac90ebc1</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1197,6 +1311,10 @@
                 <identifier>record_item_070</identifier>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-4dc8f791-8dd3-43f0-b35a-3ba0ac90ebc1</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1205,6 +1323,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.summit__Add_Info_Question_Pick_List_2__c</fieldItem>
                 <identifier>record_item_071</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Add_Info_Question_Pick_List_Long_2__c</fieldItem>
+                <identifier>RecordAdd_Info_Question_Pick_List_Long_2_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-3fe9b7ac-d949-4b97-8972-ebb2c952a639</name>
@@ -1245,10 +1373,6 @@
                 <identifier>record_item_072</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-56e813b7-d6f5-46a3-82f7-18115abdfe56</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1259,6 +1383,10 @@
                 <identifier>record_item_073</identifier>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-56e813b7-d6f5-46a3-82f7-18115abdfe56</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1267,6 +1395,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.summit__Add_Info_Question_Pick_List_3__c</fieldItem>
                 <identifier>record_item_074</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Add_Info_Question_Pick_List_Long_3__c</fieldItem>
+                <identifier>RecordAdd_Info_Question_Pick_List_Long_3_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-484c67ff-4026-4690-bef9-3d3344dde4b7</name>
@@ -1307,10 +1445,6 @@
                 <identifier>record_item_075</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-49c2a790-1cbe-40c2-9641-a7ea496a54a4</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1321,6 +1455,10 @@
                 <identifier>record_item_076</identifier>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-49c2a790-1cbe-40c2-9641-a7ea496a54a4</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1329,6 +1467,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.summit__Add_Info_Question_Pick_List_4__c</fieldItem>
                 <identifier>record_item_077</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Add_Info_Question_Pick_List_Long_4__c</fieldItem>
+                <identifier>RecordAdd_Info_Question_Pick_List_Long_4_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-4353a557-f62b-4122-82be-c765aed4626f</name>
@@ -1369,10 +1517,6 @@
                 <identifier>record_item_078</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-93769726-74b5-4863-9e99-76ca7f60275c</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1383,6 +1527,10 @@
                 <identifier>record_item_079</identifier>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-93769726-74b5-4863-9e99-76ca7f60275c</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1391,6 +1539,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.summit__Add_Info_Question_Pick_List_5__c</fieldItem>
                 <identifier>record_item_080</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Add_Info_Question_Pick_List_Long_5__c</fieldItem>
+                <identifier>RecordAdd_Info_Question_Pick_List_Long_5_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-c0199129-1f50-4096-9aba-3b4b5052ba8b</name>
@@ -1570,6 +1728,10 @@
                     <value>Facet-8ade18cb-eb1b-4150-ba09-8d2f43bb1c04</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Additional Configuration</value>
                 </componentInstanceProperties>
@@ -1582,6 +1744,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-5530099f-b4f6-48dc-a641-10976b5a64a3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1598,6 +1764,10 @@
                     <value>Facet-63ebf678-d156-4394-8612-db44b18e7a8f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Additional Question 2</value>
                 </componentInstanceProperties>
@@ -1610,6 +1780,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-e6087faf-c8a2-487c-b9bb-18f60371ed56</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1626,6 +1800,10 @@
                     <value>Facet-e663d4d6-2593-426e-9a31-832e33bf02d8</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Additional Question 4</value>
                 </componentInstanceProperties>
@@ -1640,6 +1818,10 @@
                     <value>Facet-6b685e3e-32ab-4eaa-8a21-0439ad0b9654</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Additional Question 5</value>
                 </componentInstanceProperties>
@@ -1652,6 +1834,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-3a15b272-4b97-4d7f-b5b0-e1a7089eba2e</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1727,6 +1913,36 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.summit__Guest_Table_Size__c</fieldItem>
                 <identifier>record_item_086</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Guest_Unsaved_Modal_Text__c</fieldItem>
+                <identifier>RecordGuest_Unsaved_Modal_Text_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Guest_Unsaved_Cancel_Label__c</fieldItem>
+                <identifier>RecordGuest_Unsaved_Cancel_Label_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Guest_Unsaved_Continue_Label__c</fieldItem>
+                <identifier>RecordGuest_Unsaved_Continue_Label_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-6f1934ef-fd4d-4e34-a85f-55d2a419f40b</name>
@@ -1812,6 +2028,10 @@
                     <value>Facet-3fed6515-d580-4490-9a67-36fa71214a15</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Guest Registration Configuration</value>
                 </componentInstanceProperties>
@@ -1824,6 +2044,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-d7d52a8b-8fca-4350-8391-4dc89d42c952</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -2074,6 +2298,10 @@
                     <value>Facet-09b9383b-c180-4f81-82da-143adc4e1cf5</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Confirmation Page</value>
                 </componentInstanceProperties>
@@ -2086,6 +2314,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-4942be38-4a20-4aeb-b71c-6bcf74bff273</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -2102,6 +2334,10 @@
                     <value>Facet-7c03b909-4842-464e-a04d-0cd805093e71</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Custom Questions Page</value>
                 </componentInstanceProperties>
@@ -2116,6 +2352,10 @@
                     <value>Facet-a13265b3-6909-418b-a81a-576df969ba12</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Appointment Option Page</value>
                 </componentInstanceProperties>
@@ -2128,6 +2368,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-1e7bcb7d-e550-4c56-8523-789fb0ad292d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -2332,6 +2576,10 @@
                     <value>Facet-514adf7f-50da-4869-8bfa-25344d64cd70</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Contact Matching</value>
                 </componentInstanceProperties>
@@ -2344,6 +2592,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-a43eea37-533a-4f94-be99-a791b6b558a8</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -2401,6 +2653,16 @@
                 <identifier>record_item_114</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Payment_Gateway__c</fieldItem>
+                <identifier>Recordsummit_Payment_Gateway_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-e7652cd8-cb48-4e49-a474-c7a5cc268f55</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2445,8 +2707,28 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.summit__Event_Fee_Submit_List_Label__c</fieldItem>
-                <identifier>record_item_116</identifier>
+                <fieldItem>Record.summit__Event_Fees_Received_Label__c</fieldItem>
+                <identifier>RecordEvent_Fees_Received_Label_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Event_Payment_Due_Heading_Label__c</fieldItem>
+                <identifier>RecordEvent_Payment_Due_Heading_Label_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Event_Payment_Due_Description__c</fieldItem>
+                <identifier>RecordEvent_Payment_Due_Description_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-898af6dc-1c84-435e-be26-075f1ef026e6</name>
@@ -2461,6 +2743,36 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.summit__Event_Fee_Total_Label__c</fieldItem>
                 <identifier>record_item_117</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Event_Fee_Submit_List_Label__c</fieldItem>
+                <identifier>record_item_116</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Event_Payment_Received_Heading_Label__c</fieldItem>
+                <identifier>RecordEvent_Payment_Received_Heading_Label_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.summit__Event_Payment_Received_Description__c</fieldItem>
+                <identifier>RecordEvent_Payment_Received_Description_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-59d9f745-618f-4d64-bc94-e4bc5cf26806</name>
@@ -2498,6 +2810,10 @@
                     <value>Facet-857d4124-6e0b-4bee-99bc-630a5edb7211</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Event Fee Configuration</value>
                 </componentInstanceProperties>
@@ -2510,6 +2826,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-479a486e-88ab-405f-b9d2-ccfdd37768ce</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -2670,6 +2990,10 @@
                     <value>Facet-0bac27ba-8778-4aa0-a6f6-dde5805a53e5</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Donation Configuration</value>
                 </componentInstanceProperties>
@@ -2682,6 +3006,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-7ea13b2a-b003-41a5-a1a9-9196b1f369e7</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>

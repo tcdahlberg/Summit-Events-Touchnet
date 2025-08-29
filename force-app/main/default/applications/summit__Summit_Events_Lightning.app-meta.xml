@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Summit_Events_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>summit__Summit_Events__c</pageOrSobjectType>
+    </actionOverrides>
+    <brand>
+        <headerColor>#903F98</headerColor>
+        <logo>summit__summit_events_logo128x128</logo>
+        <logoVersion>1</logoVersion>
+        <shouldOverrideOrgTheme>true</shouldOverrideOrgTheme>
+    </brand>
+    <description>The open source community events app for EDUs and NGOs</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Summit Events</label>
+    <navType>Standard</navType>
+    <tabs>standard-home</tabs>
+    <tabs>summit__Summit_Events__c</tabs>
+    <tabs>summit__Summit_Events_Instance__c</tabs>
+    <tabs>summit__Summit_Events_Email__c</tabs>
+    <tabs>summit__Summit_Events_Registration__c</tabs>
+    <tabs>summit__Summit_Events_Appointment_Type__c</tabs>
+    <tabs>summit__Summit_Events_Appointments__c</tabs>
+    <tabs>standard-report</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>
