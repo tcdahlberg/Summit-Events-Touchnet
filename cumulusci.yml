@@ -43,12 +43,12 @@ tasks:
                 WHERE Name = :siteName
         ];
         
-        List<PermissionSet> eventPermissionSets;
-        eventPermissionSets = [SELECT Name, Id FROM PermissionSet WHERE Name = 'Summit_Events_Registrant_Custom'];
+        List<PermissionSet> eventPermissionSets = [SELECT Name, Id FROM PermissionSet WHERE Name = 'Summit_Events_Registrant_Custom' OR Name = 'Touchnet_Payment_Gateway'];
         
         List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
-        if (!eventPermissionSets.isEmpty()) {
-                permissionSetList.add(new PermissionSetAssignment(PermissionSetId = eventPermissionSets[0].Id, AssigneeId = site.GuestUserId));
+        
+        for (PermissionSet ps : eventPermissionSets) {
+                permissionSetList.add(new PermissionSetAssignment(PermissionSetId = ps.Id, AssigneeId = site.GuestUserId));
         }
         if (!permissionSetList.isEmpty()) {
             upsert permissionSetList;
