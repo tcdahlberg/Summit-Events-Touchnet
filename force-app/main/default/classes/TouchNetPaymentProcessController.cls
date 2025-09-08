@@ -218,18 +218,20 @@ public without sharing class TouchNetPaymentProcessController {
         try {
             Http h = new Http();
             HttpRequest r = new HttpRequest();
-            r.setEndpoint(touchNetService);
+            r.setEndpoint('callout:Summit_Events_TouchNet');
+/*            r.setEndpoint(touchNetService);
             r.setHeader('Authorization', TouchNetHelper.getAuthorizationHeader());
-            r.setHeader('SOAPAction', touchNetService);
+            r.setHeader('SOAPAction', touchNetService);*/
             r.setMethod('GET');
             r.setBody(envelop);
             HttpResponse resp = h.send(r);
             Dom.Document doc = resp.getBodyDocument();
-            System.debug(resp.getBodyAsBlob().toString());
+            //System.debug(resp.getBodyAsBlob().toString());
             Dom.XmlNode root = doc.getRootElement();
             System.debug( root.getText());
             iterateThroughXML(root);
         } catch (Exception ex) {
+            System.debug('Error: ' + ex.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 'Error connecting payment gateway, please try later. ' + ex.getMessage()));
         }
     }

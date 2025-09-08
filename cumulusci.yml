@@ -5,7 +5,7 @@ project:
     name: Summit-Events-App-TouchNet
     api_version: '57.0'
   dependencies:
-    - github: 'https://github.com/SFDO-Community/Summit-Events-App.git'
+    - version_id: 04tVs000000DLRdIAO
   git:
     default_branch: 'main'
   source_format: sfdx
@@ -67,7 +67,19 @@ tasks:
       apex: >
         summit__Summit_Events_Settings__c eventSettings = summit__Summit_Events_Settings__c.getOrgDefaults();
         eventSettings.summit__Managed_Package__c = true;
-        upsert eventSettings;  
+        upsert eventSettings;
+
+  add_gateway_piciklist:
+    description: "Adds TouchNet to the Payment Gateway picklist"
+    class_path: cumulusci.tasks.metadata_etl.picklists.AddPicklistEntries
+    ui_options:
+      add_relationship_type_values:
+        name: Add TouchNet Gateway to picklist values
+    options:
+      picklists: summit__Summit_Events__c.summit__Payment_Gateway__c
+      entries:
+        - fullName: "Touchnet"
+          label: "Touchnet"
 
 flows:
   config_dev:
@@ -86,3 +98,5 @@ flows:
         task: check_namespace_box
       11:
         task: deploy_custom_guest_permission_set
+      12:
+        task: add_gateway_piciklist

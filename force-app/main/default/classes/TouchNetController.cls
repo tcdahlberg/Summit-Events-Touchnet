@@ -261,15 +261,18 @@ public without sharing class TouchNetController {
         }
 
         String encryptedEventInfo = EncodingUtil.urlEncode(TouchNetHelper.getSeaCookie(false), 'UTF-8');
+        String paymentCancelledError = EncodingUtil.urlEncode('Payment Cancelled', 'UTF-8');
         /** Links where to send on different return status -- All the same? **/
         envelop += '        <typ:nameValuePairs>';
         envelop += '            <typ:name>SUCCESS_LINK</typ:name>';
         envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'c__TouchNetPaymentProcess?eventInfo=' + encryptedEventInfo + '</typ:value>';
         envelop += '        </typ:nameValuePairs>';
+
         envelop += '        <typ:nameValuePairs>';
         envelop += '            <typ:name>CANCEL_LINK</typ:name>';
-        envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?eventInfo=' + encryptedEventInfo + '&amp;error=' + EncodingUtil.urlEncode('Payment Cancelled.', 'UTF-8') + '</typ:value>';
+        envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'summit__SummitEventsSubmit?error=' + paymentCancelledError + '&amp;eventInfo=' + encryptedEventInfo + '</typ:value>';
         envelop += '        </typ:nameValuePairs>';
+
         envelop += '        <typ:nameValuePairs>';
         envelop += '            <typ:name>ERROR_LINK</typ:name>';
         envelop += '            <typ:value>' + TouchNetHelper.getSeaCommunityURL() + 'c__TouchNetPaymentProcess?eventInfo=' + encryptedEventInfo + '</typ:value>';
@@ -317,19 +320,24 @@ public without sharing class TouchNetController {
         try {
             Http h = new Http();
             HttpRequest r = new HttpRequest();
-            r.setEndpoint(touchNetService);
+            r.setEndpoint('callout:Summit_Events_TouchNet');
+/*            r.setEndpoint(touchNetService);
             r.setHeader('Authorization', TouchNetHelper.getAuthorizationHeader());
-            r.setHeader('SOAPAction', touchNetService);
+            r.setHeader('SOAPAction', touchNetService);*/
+            //r.setEndpoint('callout:Summit_Events_TouchNet');
+            System.debug('Endpoint: ' + JSON.serializePretty(r.getEndpoint()));
             r.setMethod('GET');
             r.setBody(envelop);
             HttpResponse resp = h.send(r);
+            System.debug('Response Body: ' + resp.getBody());
             Dom.Document doc = resp.getBodyDocument();
             //System.debug(resp.getBodyAsBlob().toString());
             Dom.XmlNode root = doc.getRootElement();
             //System.debug( root.getText());
             iterateThroughXML(root);
-            requestedTicket =  mapResponse.get('ticket');
+            requestedTicket = mapResponse.get('ticket');
         } catch (Exception ex) {
+            System.debug('Error: ' + ex.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 'Error connecting payment gateway, please try later. ' + ex.getMessage()));
         }
         return requestedTicket;
